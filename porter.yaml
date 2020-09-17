@@ -1,0 +1,78 @@
+name: AKSPreCheck
+version: 0.1.0
+description: "Verify a subscription is properly setup for AKS deployment"
+tag: stevegriffith/aks-precheck:v0.1.0
+
+dockerfile: Dockerfile.tmpl
+
+mixins:
+  - exec
+  - az
+  - kubernetes
+
+parameters:
+- name: subscription_id
+  type: string
+- name: user_id
+  type: string
+- name: resource_group
+  type: string
+
+customActions:
+  precheck:
+    description: "Execute AKS Pre-Check"
+    stateless: true
+    modifies: false
+
+precheck:
+  - exec: 
+      description: "Azure CLI login"
+      command: "az"
+      arguments: 
+        - "login"
+
+  - exec: 
+      description: "Azure Select Subscription"
+      command: "az"
+      arguments: 
+        - "account" 
+        - "set"
+        - "--subscription" 
+        - "{{ bundle.parameters.subscription_id }}"
+  
+  - exec:
+      description: "Execute Pre-Check Script"
+      command: "./bash/aks-precheck-script.sh"
+      arguments:
+        - "{{ bundle.parameters.user_id }}"
+        - "{{ bundle.parameters.resource_group }}"
+
+install:
+  - exec: 
+      description: "Azure CLI login"
+      command: "az"
+      arguments: 
+        - "login"
+
+  - exec: 
+      description: "Azure Select Subscription"
+      command: "az"
+      arguments: 
+        - "account" 
+        - "set"
+        - "--subscription" 
+        - "{{ bundle.parameters.subscription_id }}"
+
+  - exec:
+      description: "Execute Pre-Check Script"
+      command: "./bash/bootstrap.sh"
+  
+upgrade:
+#  TODO
+
+uninstall:
+  - exec: 
+      description: "Azure CLI login"
+      command: "az"
+      arguments: 
+        - "login" 

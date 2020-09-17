@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get User Information
-UPN=<UPN GOES HERE>
+UPN=$1
 USER_OBJECTID=$(az ad user show --id $UPN --query 'objectId' -o tsv)
 echo "UPN: $UPN"
 echo "User ObjectID: $USER_OBJECTID"
@@ -11,7 +11,7 @@ SUBID=$(az account show --query 'id' -o tsv)
 echo "Azure Subscription ID: $SUBID"
 
 # Get Resource Group
-RG=<RG GOES HERE>
+RG=$2
 echo "Resource Group: $RG"
 
 # Set Location
