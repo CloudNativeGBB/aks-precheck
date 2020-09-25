@@ -65,6 +65,7 @@ echo -e "${WHITE}${BL}${HORZLINE}${BR}${NC}\n"
                                                                               
 # Get the operating system
 # TODO : Add logic for installs executables that are missing
+source /etc/os-release
 OS=$(uname)
 
 # Basic executable requirements
@@ -103,7 +104,7 @@ SUBID=$(echo $AZSUBINFO | jq '.SubscriptionID' | tr -d \")
 SUBNAME=$(echo $AZSUBINFO | jq '.SubscriptionName' | tr -d \")
 USEROBJ=$(az ad user show --id "${UPN}" --query 'objectId' -o tsv)
 
-echo -e "   [${GREEN}${BOLD}${CHECK}${NORMAL}${NC}]${NC} ${TXTLBL}Operating System      ${NC}$OS"
+echo -e "   [${GREEN}${BOLD}${CHECK}${NORMAL}${NC}]${NC} ${TXTLBL}Operating System      ${NC}$OS - ${PRETTY_NAME}"
 echo -e "   [${GREEN}${BOLD}${CHECK}${NORMAL}${NC}]${NC} ${TXTLBL}Power Capacity        ${NC}1.21 Gigawatts"
 echo -e "   [${GREEN}${BOLD}${CHECK}${NORMAL}${NC}]${NC} ${TXTLBL}Azure CLI             ${NC}${AZ}"
 echo -e "   [${GREEN}${BOLD}${CHECK}${NORMAL}${NC}]${NC} ${TXTLBL}Helm                  ${NC}${HELM}"
