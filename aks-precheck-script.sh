@@ -65,8 +65,11 @@ echo -e "${WHITE}${BL}${HORZLINE}${BR}${NC}\n"
                                                                               
 # Get the operating system
 # TODO : Add logic for installs executables that are missing
-source /etc/os-release
 OS=$(uname)
+if [ "$OS" == "Linux" ]
+then
+    source /etc/os-release
+fi
 
 # Basic executable requirements
 # Azure CLI
