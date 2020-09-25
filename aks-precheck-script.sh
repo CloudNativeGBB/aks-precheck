@@ -77,6 +77,10 @@ then
     exit 1
 else
     AZ=$(az version -o json | jq '.["azure-cli"]' | tr -d \")
+    if [[ "$AZ" == "" ]]
+    then
+        AZ="Your version is out of date, please update.  https://aka.ms/azure-cli"
+    fi
 fi
 
 # Helm
