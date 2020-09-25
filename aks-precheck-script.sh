@@ -70,7 +70,7 @@ OS=$(uname)
 # Basic executable requirements
 # Azure CLI
 AZ=""
-if [ -z $(type -fp jz) ]
+if [ -z $(type -fp az) ]
 then
     FAILMSG="   Failure: \n\n   ===> ${RED}MISSING AZURE CLI${NC}"
     done=true
